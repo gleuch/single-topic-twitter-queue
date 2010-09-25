@@ -1,22 +1,22 @@
-# Single Topic Twitter Queue
+h1. Single Topic Twitter Queue
 
 Connect up a tweet queue for your best single-topic Twitter account, plus the ability to grab messages from your email inbox.
 
-## About
+h2. About
 
 TODO
 
 
-## Installation
+h2. Installation
 
 TODO
 
 
-#### Credits
+h3. Credits
 
 Built by "Greg Leuch":http://gleu.ch.
 
 
-#### License
+h3. License
 
 Single Topic Twitter Queue released under a GNU General Public License.
