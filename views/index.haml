@@ -1,0 +1,8 @@
+- unless @tweet.blank?
+  %h3 Latest Tweet
+  %p= @tweet.tweet
+  %p
+    %small Sent: #{@tweet.sent_at}
+
+- else
+  %p No tweets have been sent yet.

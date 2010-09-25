@@ -1,0 +1,10 @@
+- unless @tweets.blank?
+  %ul
+    - @tweets.each do |tweet|
+      %li
+        %p= tweet.tweet
+        %p
+          %small Sent: #{tweet.sent_at}
+
+- else
+  %p There are no tweets to show.

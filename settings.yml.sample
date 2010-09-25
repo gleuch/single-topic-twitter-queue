@@ -1,0 +1,38 @@
+development: &local
+  site_name:              Tweet Email Queue
+
+  twitter_oauth_token:    ENTER-YOUR-TOKEN-HERE
+  twitter_oauth_secret:   ENTER-YOUR-TOKEN-SECRET-HERE
+
+  auth_logins:            ['greg:greg'] # Can push additional ones onto this array
+
+  email_imap_url:         imap.gmail.com
+  email_imap_port:        993
+  email_username:         ENTER-USERNAME
+  email_password:         ENTER-PASSWORD
+
+  allowed_senders:        ['your.email@domain.com'] # Open to everyone if left blank or set to false
+
+  db_type:        sqlite
+  db_connection:  sqlite3:///ROOT/mail_tweet_dev.db
+
+production:
+  <<: *local
+
+  # db_type:          mysql
+  # db_connection:    mysql://root:*****@localhost/mail_tweet_prod
+  db_type:          sqlite
+  db_connection:    sqlite3:///ROOT/mail_tweet_prod.db
+
+
+staging:
+  <<: *local
+
+  db_type:        sqlite
+  db_connection:  sqlite3:///ROOT/mail_tweet_stage.db
+
+test:
+  <<: *local
+
+  db_type:        sqlite
+  db_connection:  sqlite3:///ROOT/mail_tweet_test.db
