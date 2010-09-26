@@ -1,0 +1,25 @@
+%form{:action => '/tweets/create', :method => 'post'}
+  %section#tweet_fields
+    - unless @tweets.blank?
+      - @tweets.each do |tweet|
+        %fieldset
+          - unless tweet.errors.blank?
+            %ul
+              - tweet.errors.each do |e|
+                %li= e
+          %p
+            %textarea{:name => 'tweets[]'}= tweet.tweet
+            %br
+            %a{:href => 'javascript:void();', :onclick => '$(this).parent().parent().remove(); return false;'} [Cancel]
+    - else
+      %fieldset
+        %p
+          %textarea{:name => 'tweets[]', :placeholder => 'Enter your tweet...'}
+          %br
+          %a{:href => 'javascript:void();', :onclick => '$(this).parent().parent().remove(); return false;'} [Cancel]
+
+  
+  %fieldset.buttons.c
+    %input#tweets_add_more.hide.left{:type => 'button', :value => 'Add another tweet!'}
+    %button#tweets_submit.right Queue Tweets!
+    

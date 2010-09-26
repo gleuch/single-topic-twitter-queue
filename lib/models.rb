@@ -12,11 +12,11 @@ class Tweet
 
   property :id,               Serial
   property :account_id,       String
-  property :tweet,            Text
+  property :tweet,            Text,       :required => true,    :length => 1..140
   property :created_at,       DateTime
   property :sent_at,          DateTime
 
-  validates_is_unique :tweet, :scope => :account_id
+  validates_is_unique     :tweet, :scope => :account_id
 
 end
 

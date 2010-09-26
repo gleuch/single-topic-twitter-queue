@@ -8,7 +8,7 @@
 
 
 get '/' do
-  @tweet = Tweet.first(:order => [:sent_at.desc], :sent_at.not => nil, :sent_at.not => '') rescue nil
+  @tweet = Tweet.first(:order => [:sent_at.desc], :sent_at.not => nil) rescue nil
   haml :index
 end
 
@@ -31,11 +31,20 @@ get '/tweets/queued' do
 end
 
 get '/tweets/new' do
-  "COMING SOON! (TODO!)"
+  haml :new
 end
 
 post '/tweets/create' do
-  "COMING SOON! (TODO!)"
+  unless params[:tweets].blank?
+    params[:tweets].each do |tweet|
+      item = Tweet.new(:account_id => @user.account_id, :tweet => tweet) rescue nil
+      (@tweets ||= []) << item unless item.save
+    end
+    
+    return haml :new unless @tweets.blank?
+  end
+
+  redirect '/tweets/new'
 end
 
 post '/tweets/:id/delete' do
