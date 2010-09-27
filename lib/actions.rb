@@ -57,7 +57,7 @@ post '/tweets/:id/delete' do
     twitter_fail($!)
   end
 
-  request.xhr? ? throw(:halt, [ 200, 'Success' ]) : redirect('/tweets/queued')
+  request.xhr? ? halt(200, 'Success') : redirect('/tweets/queued')
 end
 
 post '/tweets/:id/send' do
@@ -77,7 +77,7 @@ post '/tweets/:id/send' do
     twitter_fail($!)
   end
 
-  request.xhr? ? throw(:halt, [ 200, 'Success' ]) : redirect('/tweets/queued')
+  request.xhr? ? halt(200, 'Success') : redirect('/tweets/queued')
 end
 
 

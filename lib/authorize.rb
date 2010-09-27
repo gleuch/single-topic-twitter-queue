@@ -16,11 +16,11 @@ module Sinatra
  
     def unauthorized!(realm='Administrative Area')
       headers 'WWW-Authenticate' => %(Basic realm="#{realm}")
-      throw :halt, [ 401, 'Authorization Required' ]
+      halt(401, 'Authorization Required')
     end
  
     def bad_request!
-      throw :halt, [ 400, 'Bad Request' ]
+      halt(400, 'Bad Request')
     end
  
     def authorized?

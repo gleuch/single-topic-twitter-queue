@@ -30,7 +30,7 @@ not_found do
   @title ||= 'Where\'d it go!?'
   @error ||= 'Sorry, but the page you were looking for could not be found.'
 
-  request.xhr? ? throw(:halt, [ 404, @error ]) : haml(:fail, 404)
+  request.xhr? ? halt(404, @error) : haml(:fail, 404)
 end
 
 # 500 errors
@@ -39,13 +39,13 @@ error do
   @error = request.env['sinatra.error'].message
   @error ||= 'An unknown error has occured.'
   
-  request.xhr? ? throw(:halt, [ 500, @error ]) : haml(:fail, 500)
+  request.xhr? ? halt(500, @error) : haml(:fail, 500)
 end
 
 
 # Require before
 before do
-  unless ['/connect', '/auth'].include?(request.env['REQUEST_PATH'])
+  unless request.env['REQUEST_URI'].match(/\/(connect|auth)/)
     @user = User.first(:order => [:created_at.desc]) rescue nil
     redirect '/connect' and return if @user.blank?
   end

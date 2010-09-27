@@ -14,13 +14,13 @@
         %nav.left
           %ul.c
             %li
-              %a{:href => '/tweets/queued', :class => (request.env['REQUEST_URI'].match(/tweets\/queued/) ? 'selected' : '')} Queued
+              %a{:href => '/tweets/queued', :class => (request.env['REQUEST_URI'].match(/\/tweets\/queued/) ? 'selected' : '')} Queued
             %li
-              %a{:href => '/tweets/sent', :class => (request.env['REQUEST_URI'].match(/tweets\/sent/) ? 'selected' : '')} Sent
+              %a{:href => '/tweets/sent', :class => (request.env['REQUEST_URI'].match(/\/tweets\/sent/) ? 'selected' : '')} Sent
         %nav.right
           %ul.c
             %li
-              %a{:href => '/tweets/new', :class => (request.env['REQUEST_URI'].match(/tweets\/(new|create)/) ? 'selected' : '')} New Tweets
+              %a{:href => '/tweets/new', :class => (request.env['REQUEST_URI'].match(/\/tweets\/(new|create)/) ? 'selected' : '')} New Tweets
 
     %section.container.c
       #content_area.left
