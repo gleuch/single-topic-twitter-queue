@@ -9,9 +9,11 @@
 
 
 $(document).ready(function() {
-  
+
+  $('time').timeago();
+
   $('#tweets_add_more').click(function() {
-    $('#tweet_fields').append("<fieldset><p><textarea class='tweet' name='tweets[]' placeholder='Enter your tweet...'></textarea></p><aside class='c'><button class='cancel hide left'>Cancel</button><p class='right charsleft hide'>140</p></aside></fieldset>");
+    $('#tweet_fields').append("<fieldset><p><textarea class='tweet' name='tweets[]' placeholder='Enter your tweet...'></textarea></p><aside class='c'><button class='cancel hide right'>Cancel</button><p class='right charsleft hide'>140</p></aside></fieldset>");
     $('#tweet_fields fieldset:last-child').hide().fadeIn(250);
     $('#tweet_fields fieldset:last-child textarea').change(dFx.charLimit).keyup(dFx.charLimit).focusin(dFx.charLimit).focusout(dFx.charLimit).focus();
     $('#tweet_fields fieldset:last-child button.cancel').removeClass('hide');
@@ -20,25 +22,32 @@ $(document).ready(function() {
 
 
   $('details li.send').click(function() {
-    var url = $(this).find('a').attr('href');
+    var url = $(this).find('a').attr('href'), fs = $(this).parent().parent().parent();
 
     $.ajax({
       url:      url,
       type:     'POST',
-      context:  $(this).parent().parent().parent(),
-      success:  function() {dFx.success(this);},
+      context:  fs,
+      success:  function() {$(this).removeClass('highlight'); dFx.success(this);},
       error:    function(r, t, e) {dFx.error(this);}
     });
     return false;
   }).removeClass('hide');
 
   $('details li.delete').click(function() {
-    var url = $(this).find('a').attr('href');
+    var url = $(this).find('a').attr('href'), fs = $(this).parent().parent().parent();
+
+    $(fs).addClass('highlight');
+    var del = confirm('Are you sure you want to delete this tweet?');
+    $(fs).removeClass('highlight');
+
+    if (!del) return false;
+    
 
     $.ajax({
       url:      url,
       type:     'POST',
-      context:  $(this).parent().parent().parent(),
+      context:  fs,
       success:  function() {dFx.success(this);},
       error:    function(r, t, e) {dFx.error(this);}
     });
@@ -47,7 +56,7 @@ $(document).ready(function() {
 
   $('.cancel').live('click', function(){
     var obj = $(this).parent().parent();
-    $(obj).animate({'height':0}, {duration: 100, queue: true, complete: function() {$(obj).remove();}});
+    $(obj).animate({'height':0}, {duration: 100, queue: true, complete: function() {$(obj).html('').remove();}});
     return false;
   }).removeClass('hide');
   
@@ -55,6 +64,11 @@ $(document).ready(function() {
   $('textarea.tweet').change(dFx.charLimit).keyup(dFx.charLimit).focusin(dFx.charLimit).focusout(dFx.charLimit);
   $('.charsleft').removeClass('hide');
 });
+
+
+
+
+
 
 var dFx = {
   charLimit : function() {
@@ -68,7 +82,7 @@ var dFx = {
       $(obj).animate({'opacity':.25}, {duration: 100, queue: true});
       $(obj).animate({'opacity':1}, {duration: 100, queue: true});
     }
-    $(obj).animate({'height':0}, {duration: 100, queue: true, complete: function() {$(obj).remove();}});
+    $(obj).animate({'height':0}, {duration: 100, queue: true, complete: function() {$(obj).html('').remove();}});
   },
   
   error : function(obj) {

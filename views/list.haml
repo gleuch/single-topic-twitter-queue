@@ -1,14 +1,16 @@
 - unless @tweets.blank?
-  %ul#tweet_list
+  %dl#tweet_list
     - @tweets.each do |tweet|
-      %li.c
+      %dd.c
         %p= tweet.tweet
         %details
           %ul.c
             - unless tweet.sent_at.blank?
-              %li.time.left Sent: #{tweet.sent_at}
+              %li.left
+                Sent
+                %time{:datetime => tweet.sent_at.to_s}= Time.parse(tweet.sent_at.to_s).to_s
             - else tweet.sent_at.blank?
-              %li.time.left
+              %li.left
                 %em Queued
               %li.right.delete.hide
                 %a{:href => "/tweets/#{tweet.id}/delete"} Delete

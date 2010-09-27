@@ -4,6 +4,7 @@
     %title= (@title.blank? ? '' : "#{@title} | ") + configatron.site_name
     %link{:rel => 'stylesheet', :href => '/css/app.css'}
     %script{:type => 'text/javascript', :src => 'http://code.jquery.com/jquery-1.4.2.min.js'}
+    %script{:type => 'text/javascript', :src => '/js/jquery.timeago.js'}
     %script{:type => 'text/javascript', :src => '/js/app.js'}
 
   %body
@@ -31,7 +32,7 @@
       %aside#sidebar.right
         = @content_for_sidebar
 
-    %footer.tc.container.c
+    %footer#footer.tc.container.c
       %p
         %a{:href => 'http://github.com/gleuch/single-topic-twitter-queue', :target => '_blank'} Single Topic Twitter Queue
         developed by

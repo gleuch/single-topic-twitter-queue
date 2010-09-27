@@ -8,13 +8,12 @@
 
 
 get '/' do
-  @tweet = Tweet.first(:order => [:sent_at.desc, :id.desc], :sent_at.not => nil) rescue nil
-  haml :index
+  redirect '/tweets/queued'
 end
 
 
 get '/tweets' do
-  raise Sinatra::NotFound, "COMING SOON! (TODO!)"
+  redirect '/tweets/queued'
 end
 
 # View tweets

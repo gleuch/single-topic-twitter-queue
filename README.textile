@@ -2,21 +2,50 @@ h1. Single Topic Twitter Queue
 
 Connect up a tweet queue for your best single-topic Twitter account, plus the ability to grab messages from your email inbox.
 
+
 h2. About
 
-TODO
+Some people want to share a Twitter account with friends. Others want to show off their stalker's crazy tweets to the Twitter-verse. Single Topic Twitter Queue allows users to sync a Twitter account and queue tweets for publishing at set intervals.
+
+Optionally, an IMAP (e.g. Gmail) inbox can be accessed to fetch potential tweets from an account. (Great for forwarding text messages!)
+
 
 
 h2. Installation
 
-TODO
+This app must be run using Ruby with Sinatra. More information about Sinatra at http://sinatrarb.com.
+
+h3. Setup
+
+Requires Ruby and Sinatra with DataMapper. The following Ruby gems are needed:
+
+* @gem install haml configatron twitter_oauth tmail@
+* @gem install dm-core dm-types dm-timestamps dm-aggregates dm-ar-finders dm-validations@
+
+h4. Settings
+
+After setup, to get the app running, you must rename settings.yml.sample to settings.yml and configure the file as necessary with text, options, and database information.
+
+h5. oAuth Application Key
+
+The oAuth consumer key and secret are required for use. You can set up your Twitter app at http://dev.twitter.com/apps/new. (You may also request to use the Single Topic Tweets oAuth app keys by contacting "@gleuch":http://twitter.com/gleuch.)
 
 
-h3. Credits
+h5. Email Setup
+
+You can optionally run a separate script to fetch emails from an IMAP/Gmail inbox. To do so, you must enter the login information for the IMAP email account. You can also include filters for whitelisting specific sender email addresses.
+
+Once that information is setup, you can run the Ruby script by running from the app folder: @ruby bin/tweet_fetch.rb@.
+
+
+h4. Interval Publishing
+
+You may elect to publish tweets on a schedule. To do so, you can use the queue script by setting up a cron task that runs from the app folder: @ruby bin/tweet_queue.rb@.
+
+
+
+h2. Credits & License
 
 Built by "Greg Leuch":http://gleu.ch.
 
-
-h3. License
-
-Single Topic Twitter Queue released under a GNU General Public License.
+Single Topic Twitter Queue is released under a GNU General Public License.

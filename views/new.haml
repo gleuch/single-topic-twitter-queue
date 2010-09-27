@@ -4,13 +4,13 @@
       - @tweets.each do |tweet|
         %fieldset
           - unless tweet.errors.blank?
-            %ul
+            %ul.errors
               - tweet.errors.each do |e|
-                %li= e
+                %li #{e}.
           %p
             %textarea.tweet{:name => 'tweets[]'}= tweet.tweet
           %aside.c
-            %button.cancel.hide.left{:href => 'javascript:void();'} Cancel
+            %button.cancel.hide.right{:href => 'javascript:void();'} Cancel
             %p.right.charsleft.hide= (140-tweet.tweet.length)
 
     - else
@@ -18,7 +18,7 @@
         %p
           %textarea.tweet{:name => 'tweets[]', :placeholder => 'Enter your tweet...'}
         %aside.c
-          %button.cancel.hide.left{:href => 'javascript:void();'} Cancel
+          %button.cancel.hide.right{:href => 'javascript:void();'} Cancel
           %p.right.charsleft.hide 140
 
   
