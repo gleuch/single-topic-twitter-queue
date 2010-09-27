@@ -8,15 +8,18 @@
               - tweet.errors.each do |e|
                 %li= e
           %p
-            %textarea{:name => 'tweets[]'}= tweet.tweet
-            %br
-            %a{:href => 'javascript:void();', :onclick => '$(this).parent().parent().remove(); return false;'} [Cancel]
+            %textarea.tweet{:name => 'tweets[]'}= tweet.tweet
+          %aside.c
+            %button.cancel.hide.left{:href => 'javascript:void();'} Cancel
+            %p.right.charsleft.hide= (140-tweet.tweet.length)
+
     - else
       %fieldset
         %p
-          %textarea{:name => 'tweets[]', :placeholder => 'Enter your tweet...'}
-          %br
-          %a{:href => 'javascript:void();', :onclick => '$(this).parent().parent().remove(); return false;'} [Cancel]
+          %textarea.tweet{:name => 'tweets[]', :placeholder => 'Enter your tweet...'}
+        %aside.c
+          %button.cancel.hide.left{:href => 'javascript:void();'} Cancel
+          %p.right.charsleft.hide 140
 
   
   %fieldset.buttons.c

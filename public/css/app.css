@@ -1,0 +1,86 @@
+/*
+  Single Topic Twitter Queue
+  Built by Greg Leuch <http://gleu.ch>
+  ------------------------------------------------------------
+  http://github.com/gleuch/single-topic-twitter-queue
+  Released under GNU General Public License.
+  
+*/
+
+
+html, body, header, hgroup, nav, article, section, details, aside, footer, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent;}
+header, hgroup, nav, article, section, details, aside, footer {clear: both; display: block;}
+html, body {height: 100%;}
+body {line-height: 1.0em; font-size: 62.5%; margin: 0; padding: 0;}
+dl dt {font-weight: bold;}
+ol, ul {list-style: none;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after, q:before, q:after {content: ''; content: none;}
+:focus {outline: 0;}
+ins {text-decoration: none;}
+del {text-decoration: line-through;}
+table {border-collapse: collapse; border-spacing: 0;}
+body, h1, h2, h3, h4, h5, h6, input, select, textarea {font-family: Helvetica, Arial, Verdana, sans-serif; line-height: 1.2em;}
+p, blockquote, li, dt, dd {font-size: 1.6em; font-family: Helvetica, Arial, Verdana, sans-serif; color: #222; line-height: 1.1em;}
+blockquote p, blockquote blockquote, li li {font-size: 1.0em;}
+dt {font-weight: bold;}
+
+li, dt, dd, fieldset {display: block;}
+
+a {color: #008dB8; text-decoration: none;}
+a:hover {color: #00546e;}
+
+
+/* ----- */
+
+.hide {display: none;}
+.left {clear: none; float: left;}
+.right {clear: none; float: right;}
+.c {clear: both; float: none;}
+.rel {position: relative;}
+.abs {position: absolute;}
+.c:after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+.sanserif {font-family: Helvetica, Arial, Verdana, sans-serif;}
+.serif {font-family: "Times New Roman", Times, Georgia, sans-serif;}
+.b {font-weight: bold;}
+.i {font-style: italic;}
+.tl {text-align: left;}
+.tr {text-align: right;}
+.tc {text-align: center;}
+
+
+
+h1 {font-size: 3.2em;}
+h2 {font-size: 2.8em;}
+h3 {font-size: 2.4em;}
+h4 {font-size: 2.0em;}
+h5 {font-size: 1.8em;}
+h6 {font-size: 1.6em;}
+h1, h2, h3, h4, h5, h6, p {padding: 0 0 6px 0;}
+
+
+#container {}
+.container {width: 763px; margin: 0 auto;}
+
+
+header {background: #008dB8; color: #fff; padding: 5px 0;}
+header h3 {font-size: 1.3em; color: #fff; padding: 5px 0;}
+/*header h3 a {display: inline-block; color: #fff; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;}
+header h3 a:hover {padding: 3px 1px; margin: -3px -1px; color: #fff; background: #00546e;}*/
+header h3 a {display: inline-block; color: #fff;}
+header h3 a:hover {color: #00546e;}
+header nav {padding: 0; margin: 0;}
+header nav.left {padding: 0 0 0 32px;}
+header nav ul {padding: 0; margin: 0;}
+header nav ul li {clear: none; float: left; padding: 0 2px; font-size: 1.3em; font-weight: bold;}
+header nav ul li a {display: block; color: #fff; padding: 5px 8px; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;}
+header nav ul li a:hover, header   nav ul li a.selected {color: #fff; background: #00546e;}
+
+
+section.container {padding: 20px 0; min-height: 300px;}
+#content_area {padding: 0 15px 0 0; width: 533px;}
+#sidebar {width: 198px;}
+
+
+
+#fail {padding: 16px 0;}

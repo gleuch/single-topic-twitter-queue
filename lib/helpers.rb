@@ -17,8 +17,7 @@ helpers do
   end
 
   def twitter_fail(msg=false)
-    @error = (!msg.blank? ? msg : 'An error has occured while trying to talk to Twitter. Please try again.')
-    haml :fail
+    raise (!msg.blank? ? msg : 'An error has occured while trying to talk to Twitter. Please try again.')
   end
 
   def partial(name, options = {})

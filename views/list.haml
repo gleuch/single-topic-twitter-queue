@@ -1,10 +1,19 @@
 - unless @tweets.blank?
-  %ul
+  %ul#tweet_list
     - @tweets.each do |tweet|
-      %li
+      %li.c
         %p= tweet.tweet
-        %p
-          %small Sent: #{tweet.sent_at}
+        %details
+          %ul.c
+            - unless tweet.sent_at.blank?
+              %li.time.left Sent: #{tweet.sent_at}
+            - else tweet.sent_at.blank?
+              %li.time.left
+                %em Queued
+              %li.right.delete.hide
+                %a{:href => "/tweets/#{tweet.id}/delete"} Delete
+              %li.right.send.hide
+                %a{:href => "/tweets/#{tweet.id}/send"} Send Now!
 
 - else
   %p There are no tweets to show.

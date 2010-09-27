@@ -7,7 +7,34 @@
     %script{:type => 'text/javascript', :src => '/js/app.js'}
 
   %body
-    %p Hello @#{@user.screen_name}!
-    %h1= @title || configatron.site_name
+    %header.c
+      .container
+        %h3.left Hello #{user_profile_url @user.screen_name}!
+        %nav.left
+          %ul.c
+            %li
+              %a{:href => '/tweets/queued', :class => (request.env['REQUEST_URI'].match(/tweets\/queued/) ? 'selected' : '')} Queued
+            %li
+              %a{:href => '/tweets/sent', :class => (request.env['REQUEST_URI'].match(/tweets\/sent/) ? 'selected' : '')} Sent
+        %nav.right
+          %ul.c
+            %li
+              %a{:href => '/tweets/new', :class => (request.env['REQUEST_URI'].match(/tweets\/(new|create)/) ? 'selected' : '')} New Tweets
 
-    = yield
+    %section.container.c
+      #content_area.left
+        %h1= @title || configatron.site_name
+
+        #content
+          = yield
+
+      %aside#sidebar.right
+        = @content_for_sidebar
+
+    %footer.tc.container.c
+      %p
+        %a{:href => 'http://github.com/gleuch/single-topic-twitter-queue', :target => '_blank'} Single Topic Twitter Queue
+        developed by
+        %a{:href => 'http://gleu.ch'} Greg Leuch
+        (#{user_profile_url 'gleuch'}).
+        

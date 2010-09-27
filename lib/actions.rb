@@ -8,25 +8,25 @@
 
 
 get '/' do
-  @tweet = Tweet.first(:order => [:sent_at.desc], :sent_at.not => nil) rescue nil
+  @tweet = Tweet.first(:order => [:sent_at.desc, :id.desc], :sent_at.not => nil) rescue nil
   haml :index
 end
 
 
 get '/tweets' do
-  "COMING SOON! (TODO!)"
+  raise Sinatra::NotFound, "COMING SOON! (TODO!)"
 end
 
 # View tweets
 get '/tweets/sent' do
   @title = 'Sent Tweets'
-  @tweets = Tweet.all(:order => [:sent_at.desc], :sent_at.not => nil) rescue nil
+  @tweets = Tweet.all(:order => [:sent_at.desc, :id.desc], :sent_at.not => nil) rescue nil
   haml :list
 end
 
 get '/tweets/queued' do
   @title = 'Queued Tweets'
-  @tweets = Tweet.all(:order => [:created_at.desc], :sent_at => nil) rescue nil
+  @tweets = Tweet.all(:order => [:created_at.asc, :id.asc], :sent_at => nil) rescue nil
   haml :list
 end
 
@@ -44,15 +44,41 @@ post '/tweets/create' do
     return haml :new unless @tweets.blank?
   end
 
-  redirect '/tweets/new'
+  redirect '/tweets/queued'
 end
 
 post '/tweets/:id/delete' do
-  "COMING SOON! (TODO!)"
+  @tweet = Tweet.get(params[:id]) rescue nil
+  raise "Could not find the tweet you requested." if @tweet.blank?
+  raise "This tweet has already been sent." unless @tweet.sent_at.blank?
+  
+  begin
+    @tweet.destroy
+  rescue
+    twitter_fail($!)
+  end
+
+  request.xhr? ? throw(:halt, [ 200, 'Success' ]) : redirect('/tweets/queued')
 end
 
 post '/tweets/:id/send' do
-  "COMING SOON! (TODO!)"
+  @tweet = Tweet.get(params[:id]) rescue nil
+  raise "Could not find the tweet you requested." if @tweet.blank?
+  raise "This tweet has already been sent." unless @tweet.sent_at.blank?
+
+  begin
+    # Connect and tweet!
+    twitter_connect(@user)
+    @twitter_client.update(@tweet.tweet) unless dev?
+
+    # Mark as sent!
+    @tweet.sent_at = Time.now
+    @tweet.save
+  rescue
+    twitter_fail($!)
+  end
+
+  request.xhr? ? throw(:halt, [ 200, 'Success' ]) : redirect('/tweets/queued')
 end
 
 
@@ -68,7 +94,7 @@ get '/connect' do
     session[:request_token_secret] = request_token.secret
     redirect request_token.authorize_url.gsub('authorize', 'authenticate')
   rescue
-    return twitter_fail($!)#'An error has occured while trying to authenticate with Twitter. Please try again.')
+    twitter_fail($!) #'An error has occured while trying to authenticate with Twitter. Please try again.')
   end
 end
 
@@ -78,8 +104,7 @@ get '/auth' do
   @title = 'Authenticate with Twitter'  
 
   unless params[:denied].blank?
-    @error = "We are sorry that you decided to not use #{configatron.site_name}. <a href=\"/\">Click</a> to return."
-    haml :fail
+    raise "We are sorry that you decided to not use #{configatron.site_name}. <a href=\"/\">Click</a> to return."
   else
     twitter_connect
     @access_token = @twitter_client.authorize(session[:request_token], session[:request_token_secret], :oauth_verifier => params[:oauth_verifier])
@@ -88,7 +113,7 @@ get '/auth' do
       begin
         info = @twitter_client.info
       rescue
-        twitter_fail and return
+        twitter_fail
       end
 
       @user = User.first_or_create(:account_id => info['id'])

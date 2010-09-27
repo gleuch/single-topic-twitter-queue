@@ -10,6 +10,7 @@
 require 'rubygems'
 require 'sinatra'
 
+# set :environment, 'production'
 
 configure do |config|
   set :sessions, true
@@ -26,13 +27,19 @@ end
 
 # 404 errors
 not_found do
-  @error = 'Sorry, but the page you were looking for could not be found.</p><p><a href="/">Click here</a> to return to the homepage.'
-  haml :fail
+  @title ||= 'Where\'d it go!?'
+  @error ||= 'Sorry, but the page you were looking for could not be found.'
+
+  request.xhr? ? throw(:halt, [ 404, @error ]) : haml(:fail, 404)
 end
 
 # 500 errors
 error do
-  haml :fail
+  @title ||= 'Oops!'
+  @error = request.env['sinatra.error'].message
+  @error ||= 'An unknown error has occured.'
+  
+  request.xhr? ? throw(:halt, [ 500, @error ]) : haml(:fail, 500)
 end
 
 
